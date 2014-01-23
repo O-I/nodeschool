@@ -1,7 +1,9 @@
 var fs = require('fs');
-fs.readFile(process.argv[2], 'utf-8', function newline_count(error, file_contents) {
+var file = process.argv[2];
+fs.readFile(file, 'utf-8', function newline_count(error, file_contents) {
     if (error) throw error;
-    console.log(file_contents.split('\n').length - 1);
+    var number_of_newlines = file_contents.split('\n').length - 1;
+    console.log(number_of_newlines);
 });
 
 // Official solution:
