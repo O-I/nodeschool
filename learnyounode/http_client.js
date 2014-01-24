@@ -3,9 +3,8 @@ var http = require('http'),
 
 http.get(url, function(response) {
   response.setEncoding('utf-8');
-  response.on('data', function(chunk) {
-    console.log(chunk);
-  });
+  response.on('data', console.log);
+  response.on('error', console.error);
 });
 
 // Official solution:
