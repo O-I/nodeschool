@@ -12,3 +12,21 @@ module.exports = function(pathname, file_extension_filter, callback) {
     return callback(null, filtered_file_list);
   });
 }
+
+// Official solution:
+// var fs = require('fs')
+// var path = require('path')
+
+// module.exports = function (dir, filterStr, callback) {
+
+//   fs.readdir(dir, function (err, list) {
+//     if (err)
+//       return callback(err)
+
+//     list = list.filter(function (file) {
+//       return path.extname(file) === '.' + filterStr
+//     })
+
+//     callback(null, list)
+//   })
+// }
