@@ -4,21 +4,28 @@ var http = require('http'),
     length = url_list.length,
     responses_received = 0,
     index = 0,
+    i = 0,
     responses = [];
+
+var printResponses = function() {
+  for (i; i < length; i++)
+    console.log(responses[i]);
+}
 
 var httpGet = function(index, url) {
   http.get(url, function(response) {
-    responses[index] = '';
+    //responses[index] = '';
     response.pipe(bl(function(error, data) {
       if (error) return error;
-      responses[index] += data.toString();
-    }));
-    response.on('end', function() {
+      responses[index] = data.toString();
+    //response.on('end', function() {
       responses_received++;
       if (responses_received === length)
-        for (index; index < length; index++)
-          console.log(responses[index]);
-    });
+        printResponses();
+        // for (index; index < length; index++)
+        //   console.log(responses[index]);
+   // });
+    }));
   });
 }
 
@@ -50,6 +57,6 @@ for (index; index < length; index++)
 //     }))
 //   })
 // }
-    
+
 // for (var i = 0; i < 3; i++)
 //   httpGet(i)
