@@ -4,27 +4,21 @@ var http = require('http'),
     length = url_list.length,
     responses_received = 0,
     index = 0,
-    i = 0,
     responses = [];
 
 var printResponses = function() {
-  for (i; i < length; i++)
-    console.log(responses[i]);
+  for (index = 0; index < length; index++)
+    console.log(responses[index]);
 }
 
 var httpGet = function(index, url) {
   http.get(url, function(response) {
-    //responses[index] = '';
     response.pipe(bl(function(error, data) {
       if (error) return error;
       responses[index] = data.toString();
-    //response.on('end', function() {
       responses_received++;
       if (responses_received === length)
         printResponses();
-        // for (index; index < length; index++)
-        //   console.log(responses[index]);
-   // });
     }));
   });
 }
