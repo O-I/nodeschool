@@ -4,7 +4,8 @@ var http = require('http'),
     filepath = process.argv[3];
 
 var server = http.createServer(function(request, response) {
-  response.end(filepath);
+  var file = fs.createReadStream(filepath, {encoding: 'utf-8'});
+  file.pipe(response);
 });
 
 server.listen(port);
