@@ -8,7 +8,7 @@ var server = http.createServer(function(request, response) {
       return chunk.toString().toUpperCase();
     })).pipe(response);
   else
-    response.end();
+    return response.end('I only accept POST requests\n');
 });
 
 server.listen(port);
