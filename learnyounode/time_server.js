@@ -1,8 +1,9 @@
 var net = require('net');
 var strftime = require('strftime');
+var port = process.argv[2];
 
 var server = net.createServer(function(socket) {
-  socket.end(strftime('%F %R'));
+  socket.end(strftime('%F %R\n'));
 });
 
-server.listen(8000);
+server.listen(port);
