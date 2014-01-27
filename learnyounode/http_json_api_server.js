@@ -1,26 +1,42 @@
 var http = require('http'),
     url = require('url'),
-    port = process.argv[2],
-    parsetime, unixtime;
+    port = process.argv[2];
+
+var parsetime = function(datetime) {
+  return {
+            'hour': datetime.getHours(),
+            'minute': datetime.getMinutes(),
+            'second': datetime.getSeconds()
+         };
+}
+
+var unixtime = function(datetime) {
+  return { 'unixtime': datetime.getTime() };
+}
 
 var server = http.createServer(function(request, response) {
   if (request.method === 'GET') {
-    response.writeHead(200, { 'Content-Type': 'application/json' });
     var parsed_url = url.parse(request.url, true),
         path = parsed_url.pathname,
-        datetime = new Date(parsed_url.query.iso);
-    if (path === '/api/parsetime') {
-      parsetime = {
-                     'hour': datetime.getHours(),
-                     'minute': datetime.getMinutes(),
-                     'second': datetime.getSeconds()
-                  };
-      response.end(JSON.stringify(parsetime));
+        datetime = new Date(parsed_url.query.iso),
+        result;
+    if (path === '/api/parsetime')
+      result = parsetime(datetime);
+    else if (path === '/api/unixtime')
+      result = unixtime(datetime);
+    
+    if (result) {
+      response.writeHead(200, { 'Content-Type': 'application/json' });
+      response.end(JSON.stringify(result));
     }
-    else if (path === '/api/unixtime') {
-      unixtime = { 'unixtime': datetime.getTime() };
-      response.end(JSON.stringify(unixtime));
-    }
+    else {
+      response.writeHead(404);
+      response.end("Sorry, I don't recognize that API endpoint\n");
+    }  
+  }
+  else {
+    response.writeHead(404);
+    response.end('Sorry, I only accept GET requests\n');
   }
 });
 
