@@ -2,13 +2,13 @@ var through = require('through'),
     trumpet = require('trumpet'),
     tr = trumpet();
 
-var th = through(
+var thru = through(
   function(buffer) {
     this.queue(buffer.toString().toUpperCase());
   });
 
-var stream = tr.select('.loud').createStream();
+var embiggen = tr.select('.loud').createStream();
 
-stream.pipe(th).pipe(stream);
+embiggen.pipe(thru).pipe(embiggen);
 
 process.stdin.pipe(tr).pipe(process.stdout);
