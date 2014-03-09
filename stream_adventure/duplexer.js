@@ -3,6 +3,5 @@ var child_process = require('child_process').spawn,
 
 module.exports = function(command, arguments) {
   spawn = child_process(command, arguments);
-  //return spawn.stdout;
-  // return duplex(spawn.stdout, spawn.stdin);
+  return duplex(spawn.stdin, spawn.stdout);
 };
